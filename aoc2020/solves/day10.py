@@ -18,33 +18,20 @@ class day10(AocDay):
 
     challenge1 = "use all adapters, multiply #1diff*#3diff"
     def solve1(self):
-        device = max(self.values)+3
-        current = 0
-        ones = 0
-        threes = 0
-        result = self.rec(self.values, ones, threes, current)
-        return result[0]*(result[1]+1)
-
-    def rec(self, vals, ones, threes, current):
-        if len(vals) == 0:
-            return [ones, threes]
-        
-        for i in range(min(3, len(vals))):
-            val = vals[i]
-            diff = val - current
-            if not (diff == 3 or diff ==1):
-                continue
-            newvals = vals[0:i] + vals[i+1:]            
-            current = val
-            if diff == 1:
-                ones += 1
-            if diff == 3:
-                threes += 1 
-            return self.rec(newvals, ones, threes, current)
-        pass
+        self.process_input()
+        mem = {1:1, 3:0}
+        x = max(self.values)+3
+        while len(self.values) > 0:
+            val = self.values.pop()
+            if x-val==3: mem[3] += 1
+            if x-val==1: mem[1] += 1
+            x = val
+        return mem[1]*mem[3]
+            
             
     challenge2 = "not all adapters required, how many ways can you step to max+3"
     def solve2(self):
+        self.process_input()
         mem = {max(self.values)+3:1}
         while len(self.values) > 0:
             val = self.values.pop()
