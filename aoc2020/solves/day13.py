@@ -45,56 +45,16 @@ class day13(AocDay):
 
     challenge2 = 'when do all buses leave in order at 1 min interval, min is like a trillion'
     def solve2(self):
-        primes = [1 if x == 'x' else int(x) for x in self.buses]
-        lcm_me = [i + 1 if x == 'x' else int(x) + i for i,x in enumerate(self.buses)]
-        print(lcm_me)
-        stride = max(buses)
-        time = -buses.index(stride)
-        time = 99999999999869
-        print(list(enumerate(buses)))
-        
-        found = False
-        while not found:
-            time += stride
-            #print(f'check {time}')
-            ok = 0
-            for i, bus in enumerate(buses):
-                if (time + i) % bus != 0: break
-                ok += 1
-            found = ok == len(buses)
+        input = '23,x,x,x,x,x,x,x,x,x,x,x,x,41,x,x,x,x,x,x,x,x,x,829,x,x,x,x,x,x,x,x,x,x,x,x,13,17,x,x,x,x,x,x,x,x,x,x,x,x,x,x,29,x,677,x,x,x,x,x,37,x,x,x,x,x,x,x,x,x,x,x,x,19'
+        input = [(i,int(x)) for i,x in enumerate(input.split(',')) if x != 'x']
+
+        time = 0
+        product = 1
+        for bus in input:
+            while (time + bus[0]) % bus[1] != 0:
+                time += product
+            product *= bus[1]
         return time
-
-
-    def checktime(self, time):
-        #print(f'check {time}')
-        for i, bus in enumerate(self.buses):
-            if bus == 'x': continue
-            if (time + i) % int(bus) + i != int(bus): return False
-        return True
-
-    def tick(self, stops, time):
-        #advance each schedule up to desired time and return array of times
-        times = []
-        for i, stop in enumerate(stops):
-            checktime = time + i
-            nextstop = next(stop)
-            while nextstop < checktime:
-                nextstop = next(stop)
-            if nextstop > checktime:
-                stop.send(nextstop)
-            times.append(nextstop)
-        return times
-
-    def hasstop(self, bus, t):
-        if bus == 'x': return True
-        stop = self.gentimes(int(bus))
-        nextstop = 0
-        while nextstop < t:
-            nextstop = next(stop)
-            if nextstop == t: return True
-        return False
-
-
 
 day = day13(13)
 day.solve()
