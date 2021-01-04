@@ -1,6 +1,6 @@
 from aoc import AocDay
 
-class dayXX(AocDay):   
+class day18(AocDay):   
 
     def __init__(self, day):
         AocDay.__init__(self, day)
@@ -17,5 +17,5 @@ class dayXX(AocDay):
     def solve2(self):
         pass
 
-day = dayXX(XX)
+day = day18(18)
 day.solve()
